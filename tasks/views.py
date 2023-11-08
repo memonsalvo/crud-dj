@@ -3,4 +3,6 @@ from django.contrib.auth.forms import UserCreationForm
 
 #
 def helloworld(request):
-    return render(request, 'signup.html')
+    return render(request, 'signup.html',{
+        'form': UserCreationForm
+    })
