@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 
 
 #
@@ -35,3 +35,7 @@ def signup(request):
 
 def tasks(request):
     return render(request, 'tasks.html')
+
+def signout(request):
+    logout(request)
+    return redirect('home')
