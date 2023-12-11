@@ -9,7 +9,8 @@ class Task(models.Model): #para que django pueda crear la tabla se hace dicho im
     datecompleted = models.DateTimeField(null=True) # va ser un campo vacio inicialmente
     important = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    #11= se invoca aqui la funcion USER importada arriba para manejar y borrar en cascada
-    # 6.1= charfield: tipo texto y en parentesis se puede poner cuanta cantidad 
-    # de caracteres se le dara
-    #6= luego django dice que tipo de datos son asi que se les debe asignar el tipo
+    
+    def __str__(self):
+        return self.title + '- by' + self.user.username
+    #con esto se personaliza el panel de admin al poner el nombre de quien lo hizo
+    #o a que bd esta vinculado
