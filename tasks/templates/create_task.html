@@ -4,11 +4,15 @@
 
     <h1>Create task</h1>
 
-    <form action="/task/create/" method="POST">
-        {% csrf_token %} 
+    {{error}}
+
+    <form action="/tasks/create/" method="POST">
+        {% csrf_token %}
         {{form}}
 
-         <button>save</button>
+        <button>
+            save
+        </button>
     </form>
-    
+
 {% endblock %}

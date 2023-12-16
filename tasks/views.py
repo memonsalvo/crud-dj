@@ -46,10 +46,19 @@ def create_task(request):
             'form': TaskForm
         })
     else:
-        print(request.POST) #muestra el resultado enviado al form en consola
-        return render(request, 'create_task.html', {
-            'form': TaskForm
-        })
+        try:
+            # le pasa los datos ingresados de post a la clase taskform
+            form = TaskForm(request.POST)
+            # este commit devuelve los datos dentro del form
+            new_task = form.save(commit=False)
+            new_task.user = request.user  # es necesario llamar al usuario de la sesion por
+            new_task.save()
+            return redirect('tasks')#al guardar redirecciona a la pag tasks
+        except ValueError:#se activa cuando consideremos un error
+            return render(request, 'create_task.html', {
+                'form': TaskForm,
+                'error':'please provide valida data'#mensaje de error sino funciona
+            })
 
 
 def signout(request):
