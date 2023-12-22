@@ -2,4 +2,22 @@
 
 {% block content %}
 <h1>Tasks</h1>
+<ul>
+    {% for task in tasks %}
+    <li>
+        {% if task.important %}
+        <strong>{{task.title}}</strong>
+        {% else %}
+            {{task.title}}
+        {% endif %}
+        <p>{{task.description}}</p>
+        <p>{{task.user.username}}</p>
+    </li>
+    {% endfor %}
+</ul>
+<!-- donde task es el dato que recorre y almacena y tasks la info de la bd a recorrer-->
+<!-- por cada recorrido se creara un <li> y mostrara el titulo de la tarea-->
+<!-- o en este caso el titulo en h1, la descripcion del mismo y el usuario
+al que esta vinculado, en models se puede ver el nombre de la variable que almacena
+el usuario -->
 {% end block %}

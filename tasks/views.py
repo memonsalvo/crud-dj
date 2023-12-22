@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from .forms import TaskForm
-
+from .models import Task #se llama para hacer una consula a la bd
 #
 
 
@@ -37,8 +37,11 @@ def signup(request):
 
 
 def tasks(request):
-    return render(request, 'tasks.html')
-
+    tasks = Task.objects.filter(user=request.user, datecompleted__isnull=True) #esto devuelve todas las tareas que estan en la bd
+    return render(request, 'tasks.html', {'tasks':tasks})
+# de all se pasa a filter para filtrar la info por usuario y que no se acceda a datos
+#de otros usuarios por medio de un usuario normal
+#dentro del filtro se busca la info correspondiente al usuario actual en inicio de sesion
 
 def create_task(request):
     if request.method == 'GET':
