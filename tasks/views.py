@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -63,7 +63,12 @@ def create_task(request):
                 'error':'please provide valida data'#mensaje de error sino funciona
             })
 
-
+def task_detail(request, task_id):
+    task = get_object_or_404(Task, pk=task_id)#para obtener un dato de primary key
+    return render(request, 'task_detail.html', {'task':task})#se llama el request para la peticion y 
+#asi mostrar la pagina en especifico de html que se quiere mostrar
+#en el diccionario se vincula la variable con el dato
+# es necesario al cambiar la forma de llamado llamar el modelo que se va a consultar
 def signout(request):
     logout(request)
     return redirect('home')
