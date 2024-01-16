@@ -22,10 +22,12 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('signup/', views.signup, name='signup'), # type: ignore
     path('tasks/', views.tasks, name='tasks'),
+    path('tasks/create/', views.create_task, name='create_task'),
+    path('tasks/<int:task_id>/complete', views.complete_task, name='complete_task'), # type: ignore
+    path('tasks/<int:task_id>/delete', views.delete_task, name='delete_task'), # type: ignore
+    path('tasks/<int:task_id>/', views.task_detail, name='task_detail'),
     path('logout/', views.signout, name='logout'),
     path('signin/', views.signin, name='signin'),
-    path('tasks/create/', views.create_task, name='create_task'),
-    path('tasks/<int:task_id>/', views.task_detail, name='task_detail'),
 ]
 #url de parametro dinamico, se indica que tipo de dato sera el parametro el cual debe
 #mostrarse en o añadirse como parametro en la funcion de su nombre
