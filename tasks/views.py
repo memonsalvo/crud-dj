@@ -46,10 +46,9 @@ def tasks(request):
     return render(request, "tasks.html", {"tasks": tasks})
 
 
-# de all se pasa a filter para filtrar la info por usuario y que no se acceda a datos
-# de otros usuarios por medio de un usuario normal
-# dentro del filtro se busca la info correspondiente al usuario actual en inicio de sesion
-
+def tasks_completed(request):#para completar una tarea
+    tasks = Task.objects.filter(user=request.user, datecompleted__isnull=False).order_by('-datecompleted')
+    return render(request, 'tasks.html', {"tasks": tasks})
 
 def create_task(request):
     if request.method == "GET":
