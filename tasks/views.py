@@ -6,7 +6,7 @@ from django.contrib.auth import login, logout, authenticate
 from .forms import TaskForm
 from .models import Task  # se llama para hacer una consula a la bd
 from django.utils import timezone  # se importa el metodo para usar zona horaria
-
+from django.contrib.auth.decorators import login_required #es un decorador
 
 def home(request):
     return render(request, "home.html")
@@ -39,17 +39,18 @@ def signup(request):
             {"form": UserCreationForm, "error": "Password do not match"},
         )
 
-
+@login_required
 def tasks(request):
     # esto devuelve todas las tareas que estan en la bd
     tasks = Task.objects.filter(user=request.user, datecompleted__isnull=True)
     return render(request, "tasks.html", {"tasks": tasks})
 
-
+@login_required
 def tasks_completed(request):#para completar una tarea
     tasks = Task.objects.filter(user=request.user, datecompleted__isnull=False).order_by('-datecompleted')
     return render(request, 'tasks.html', {"tasks": tasks})
 
+@login_required
 def create_task(request):
     if request.method == "GET":
         return render(request, "create_task.html", {"form": TaskForm})
@@ -74,7 +75,7 @@ def create_task(request):
                 },
             )
 
-
+@login_required
 def task_detail(request, task_id):
     if request.method == "GET":
         task = get_object_or_404(Task, pk=task_id)
@@ -98,7 +99,7 @@ def task_detail(request, task_id):
 # en el diccionario se vincula la variable con el dato
 # es necesario al cambiar la forma de llamado llamar el modelo que se va a consultar
 
-
+@login_required # type: ignore
 def complete_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id, user=request.user)
     if request.method == "POST":
@@ -106,14 +107,14 @@ def complete_task(request, task_id):
         task.save()  # inscriba los datos de la zona horaria justo en el momento
         return redirect("tasks")  # redirecciona a la vista de tareas
 
-
+@login_required # type: ignore
 def delete_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id, user=request.user)
     if request.method == "POST":
         task.delete()
         return redirect("tasks")  # redirecciona a la vista de tareas
 
-
+@login_required
 def signout(request):
     logout(request)
     return redirect("home")
