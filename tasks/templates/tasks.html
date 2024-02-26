@@ -1,31 +1,20 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
 
-{% block content %}
-<h1>Tasks</h1>
+<h1>tasks</h1>
+
 <ul>
-    {% for task in tasks %}
-    <li>
-        <a href="{% url 'task_detail' task.id %}">
-            {% if task.important %}
-            <strong>{{task.title}}</strong>
-            {% else %}
-                {{task.title}}
-            {% endif %}
+  {% for task in tasks %}
+  <li>
+    <a href="{% url 'task_detail' task.id %}">
+      {% if task.important %}
+      <strong>{{task.title}}</strong>
+      {% else %} {{task.id}} {{task.title}} {% endif %}
+      <p>{{task.description}}</p>
 
-            <p>{{task.description}}</p>
-            <p>{{task.user.username}}</p>
-
-            <p>{{task.datecompleted|date:'M j Y:i'}}</p>
-        </a>
-    </li>
-    {% endfor %}
+      {{task.datecompleted|date:'M j Y:i'}}
+    </a>
+  </li>
+  {% endfor %}
 </ul>
-<!-- primer parametro palabra clave url, luego el nombre de la ruta que quiero visitar
-en comillas simples, luego el parametro que va a recibir -->
 
-<!-- donde task es el dato que recorre y almacena y tasks la info de la bd a recorrer-->
-<!-- por cada recorrido se creara un <li> y mostrara el titulo de la tarea-->
-<!-- o en este caso el titulo en h1, la descripcion del mismo y el usuario
-al que esta vinculado, en models se puede ver el nombre de la variable que almacena
-el usuario -->
-{% end block %}
+{% endblock %}
